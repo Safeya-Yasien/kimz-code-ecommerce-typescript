@@ -1,4 +1,5 @@
-import { createRoot } from 'react-dom/client'
-import './index.css'
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import MainLayout from "./layouts/MainLayout/MainLayout";
 
-createRoot(document.getElementById('root')!).render(<h1>hellow</h1>)
+createRoot(document.getElementById("root")!).render(<MainLayout />);
