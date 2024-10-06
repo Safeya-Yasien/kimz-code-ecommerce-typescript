@@ -9,6 +9,7 @@ const Error = () => {
       </p>
       <Link
         to="/"
+        replace
         className="mt-6 inline-block px-6 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 transition"
       >
         Go Back Home
