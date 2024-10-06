@@ -1,15 +1,16 @@
-import React from "react";
-import { Header } from "../../components/common";
+import { Footer, Header } from "@components/common";
+import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
-  return <div className="container">
-
-     <div className="wrapper">
-        <Header/>
-     </div>
-    
-
-  </div>;
+  return (
+    <div className="flex flex-col h-screen">
+      <Header />
+      <div className="container">
+        <Outlet />
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default MainLayout;

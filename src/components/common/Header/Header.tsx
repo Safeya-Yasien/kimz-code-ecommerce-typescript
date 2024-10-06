@@ -2,13 +2,12 @@ import { HeaderBasket } from "../../eCommerce";
 
 const Header = () => {
   return (
-    <header>
+    <header className="fixed top-0 left-0 w-full z-50">
       <div
         className="flex items-center justify-between 
-     bg-gray-50 md:bg-white"
+     bg-gray-50 md:bg-white px-8 py-3"
       >
-        <HeaderBasket />
-        <ul className="font-medium flex flex-col p-4  mt-4 border border-gray-100 r  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0  ">
+        <ul className="font-medium flex flex-col border border-gray-100 r  md:flex-row md:space-x-8 rtl:space-x-reverse md:border-0  ">
           <li>
             <a
               href="#"
@@ -27,13 +26,12 @@ const Header = () => {
             </a>
           </li>
         </ul>
+        <HeaderBasket />
       </div>
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a
-            href="https://flowbite.com/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
-          >
+
+      <nav className="bg-white border-gray-200 dark:bg-gray-900 ">
+        <div className="flex flex-wrap items-center justify-between mx-auto py-4 px-8">
+          <a href="/" className="flex items-center space-x-3 ">
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               Our Ecom
             </span>
