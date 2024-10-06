@@ -5,5 +5,6 @@ import Register from "./Register";
 import Login from "./Login";
 import Categories from "./Categories";
 import Error from "./Error";
+import Contact from "./Contact";
 
-export { Home, AboutUs, Products, Register, Login, Categories, Error };
+export { Home, AboutUs, Products, Register, Login, Categories, Error,Contact };

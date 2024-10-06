@@ -1,6 +1,7 @@
 import MainLayout from "@layouts/MainLayout/MainLayout";
 import AboutUs from "@pages/AboutUs";
 import Categories from "@pages/Categories";
+import Contact from "@pages/Contact";
 import Error from "@pages/Error";
 import Home from "@pages/Home";
 import Login from "@pages/Login";
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
       },
     ],
   },
