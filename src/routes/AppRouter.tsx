@@ -7,7 +7,11 @@ import Home from "@pages/Home";
 import Login from "@pages/Login";
 import Products from "@pages/Products";
 import Register from "@pages/Register";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  LoaderFunctionArgs,
+  RouterProvider,
+} from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +34,17 @@ const router = createBrowserRouter([
       {
         path: "products/:prefix",
         element: <Products />,
+        loader: ({ params }: LoaderFunctionArgs) => {
+          const { prefix } = params;
+          if (typeof prefix !== "string" || !/^[a-z]+$/i.test(prefix)) {
+            throw new Response("Bad Request", {
+              statusText: "Category not found",
+              status: 400,
+            });
+          }
+
+          return true;
+        },
       },
       {
         path: "login",
