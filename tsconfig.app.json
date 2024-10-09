@@ -20,7 +20,9 @@
       "@layouts/*": ["src/layouts/*"],
       "@util/*": ["src/util/*"],
       "@services/*": ["src/services/*"],
-      "@lib/*": ["src/lib/*"]
+      "@lib/*": ["src/lib/*"],
+      "@types/*": ["src/types/*"],
+      
     },
 
     /* Bundler mode */

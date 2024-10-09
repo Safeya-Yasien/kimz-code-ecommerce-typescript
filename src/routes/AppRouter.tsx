@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         element: <Categories />,
       },
       {
-        path: "products/:prefix",
+        path: "categories/products/:prefix",
         element: <Products />,
         loader: ({ params }: LoaderFunctionArgs) => {
           const { prefix } = params;
