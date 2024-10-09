@@ -8,14 +8,14 @@ const Categories = () => {
   const { records } = useAppSelector((state) => state.categories);
 
   useEffect(() => {
-    dispatch(actGetCategories());
-  }, [dispatch]);
+    if (records.length === 0) {
+      dispatch(actGetCategories());
+    }
+  }, [dispatch, records]);
 
   const categoriesList =
     records.length > 0
-      ? records.map((record) => (
-          <Category key={record.id} {...record}/>
-        ))
+      ? records.map((record) => <Category key={record.id} {...record} />)
       : "There are no categories";
 
   return (
