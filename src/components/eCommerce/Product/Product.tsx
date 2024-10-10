@@ -1,4 +1,4 @@
-import { IProduct } from "@types/product";
+import { IProduct } from "@models/product";
 
 const Product = ({ title, price, img }: IProduct) => {
   return (

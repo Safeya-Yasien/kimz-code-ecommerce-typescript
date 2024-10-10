@@ -1,3 +1,4 @@
+import { GridList } from "@components/common";
 import { Product } from "@components/eCommerce";
 import { Loading } from "@components/feedback";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
@@ -19,15 +20,13 @@ const Products = () => {
     };
   }, [dispatch, prefix]);
 
-  const productsList =
-    records.length > 0
-      ? records.map((record) => <Product key={record.id} {...record} />)
-      : "There are no categories";
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
       <Loading error={error} status={loading}>
-        {productsList}
+        <GridList
+          records={records}
+          renderItem={(record) => <Product key={record.id} {...record} />}
+        />
       </Loading>
     </div>
   );

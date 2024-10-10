@@ -1,4 +1,4 @@
-import { TLoading } from "@types/shared";
+import { TLoading } from "@models/shared";
 import { ReactNode } from "react";
 
 type TLoadingProps = {

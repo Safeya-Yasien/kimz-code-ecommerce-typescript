@@ -21,8 +21,7 @@
       "@util/*": ["src/util/*"],
       "@services/*": ["src/services/*"],
       "@lib/*": ["src/lib/*"],
-      "@types/*": ["src/types/*"],
-      
+      "@models/*": ["src/models/*"]
     },
 
     /* Bundler mode */

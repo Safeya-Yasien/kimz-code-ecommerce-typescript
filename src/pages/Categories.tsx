@@ -1,3 +1,4 @@
+import { GridList } from "@components/common";
 import { Category } from "@components/eCommerce";
 import { Loading } from "@components/feedback";
 import actGetCategories from "@store/categories/actGetCategories";
@@ -16,15 +17,13 @@ const Categories = () => {
     }
   }, [dispatch, records]);
 
-  const categoriesList =
-    records.length > 0
-      ? records.map((record) => <Category key={record.id} {...record} />)
-      : "There are no categories";
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
       <Loading error={error} status={loading}>
-        {categoriesList}
+        <GridList
+          records={records}
+          renderItem={(record) => <Category key={record.id} {...record} />}
+        />
       </Loading>
     </div>
   );
