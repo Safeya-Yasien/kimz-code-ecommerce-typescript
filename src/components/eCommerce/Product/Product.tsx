@@ -1,6 +1,14 @@
 import { IProduct } from "@models/product";
+import { addToCart } from "@store/cart/cartSlice";
+import { useAppDispatch } from "@store/hooks";
 
-const Product = ({ title, price, img }: IProduct) => {
+const Product = ({ id, title, price, img }: IProduct) => {
+  const dispatch = useAppDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(id));
+  };
+
   return (
     <div className="max-w-xs rounded-lg overflow-hidden shadow-lg bg-white transform transition duration-300 hover:scale-105 hover:shadow-xl m-4">
       <div className="relative">
@@ -20,7 +28,10 @@ const Product = ({ title, price, img }: IProduct) => {
         <p className="text-gray-700 text-base">Price: {price} EGP</p>
       </div>
       <div className="px-6 py-4">
-        <button className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 w-full">
+        <button
+          className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 w-full"
+          onClick={handleAddToCart}
+        >
           Add to Cart
         </button>
       </div>
