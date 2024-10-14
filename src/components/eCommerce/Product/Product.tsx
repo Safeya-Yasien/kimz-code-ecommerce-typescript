@@ -1,9 +1,9 @@
 import { IProduct } from "@models/product";
 import { addToCart } from "@store/cart/cartSlice";
 import { useAppDispatch } from "@store/hooks";
-import { useState } from "react";
+import { memo, useState } from "react";
 
-const Product = ({ id, title, price, img, max, quantity }: IProduct) => {
+const Product = memo(({ id, title, price, img, max, quantity }: IProduct) => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
 
@@ -19,6 +19,7 @@ const Product = ({ id, title, price, img, max, quantity }: IProduct) => {
     }, 1000);
   };
 
+  console.log("typeof", typeof price)
   return (
     <div className="max-w-xs rounded-lg overflow-hidden shadow-lg bg-white transform transition duration-300 hover:scale-105 hover:shadow-xl m-4">
       <div className="relative">
@@ -35,7 +36,7 @@ const Product = ({ id, title, price, img, max, quantity }: IProduct) => {
         <h2 className="font-bold text-xl mb-2" title={title}>
           {title}
         </h2>
-        <p className="text-gray-700 text-base">Price: {price} EGP</p>
+        <p className="text-gray-700 text-base">Price: {price.toFixed(2)} EGP</p>
         <p>
           {quantityReachedMax
             ? "You reach to the limit"
@@ -48,12 +49,15 @@ const Product = ({ id, title, price, img, max, quantity }: IProduct) => {
           onClick={handleAddToCart}
           disabled={loading || quantityReachedMax}
         >
-          {loading ? "Adding" : quantityReachedMax ? "Out of stock" : "Add to Cart"}
-
+          {loading
+            ? "Adding"
+            : quantityReachedMax
+            ? "Out of stock"
+            : "Add to Cart"}
         </button>
       </div>
     </div>
   );
-};
+});
 
 export default Product;

@@ -1,4 +1,4 @@
-import { GridList } from "@components/common";
+import { GridList, Heading } from "@components/common";
 import { Product } from "@components/eCommerce";
 import { Loading } from "@components/feedback";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
@@ -27,14 +27,17 @@ const Products = () => {
   }, [dispatch, prefix]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-      <Loading error={error} status={loading}>
-        <GridList
-          records={productsFullInfo}
-          renderItem={(record) => <Product key={record.id} {...record} />}
-        />
-      </Loading>
-    </div>
+    <>
+      <Heading>{prefix}</Heading>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+        <Loading error={error} status={loading}>
+          <GridList
+            records={productsFullInfo}
+            renderItem={(record) => <Product key={record.id} {...record} />}
+          />
+        </Loading>
+      </div>
+    </>
   );
 };
 

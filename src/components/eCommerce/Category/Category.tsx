@@ -1,4 +1,4 @@
-import { ICategory } from "@types/category";
+import { ICategory } from "@models/category";
 import { Link } from "react-router-dom";
 
 const Category = ({ title, img, prefix }: ICategory) => {
