@@ -5,23 +5,35 @@ import cart from "./cart/cartSlice";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist";
 
-const rootPersistConfig = {
-  key: "root",
+const cartPersistConfig = {
+  key: "cart",
   storage,
-  whitelist: ["cart"],
+  whitelist: ["items"],
 };
 
 const rootReducer = combineReducers({
   categories,
   products,
-  cart,
+  cart: persistReducer(cartPersistConfig, cart),
 });
 
-const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
-
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
