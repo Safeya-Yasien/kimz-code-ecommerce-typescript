@@ -1,12 +1,19 @@
 import { IProduct } from "@models/product";
 import { addToCart } from "@store/cart/cartSlice";
 import { useAppDispatch } from "@store/hooks";
+import { useState } from "react";
 
 const Product = ({ id, title, price, img }: IProduct) => {
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
 
   const handleAddToCart = () => {
+    setLoading(true);
     dispatch(addToCart(id));
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   return (
@@ -31,8 +38,9 @@ const Product = ({ id, title, price, img }: IProduct) => {
         <button
           className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 w-full"
           onClick={handleAddToCart}
+          disabled={loading}
         >
-          Add to Cart
+          {loading ? "Adding" : "Add to Cart"}
         </button>
       </div>
     </div>
