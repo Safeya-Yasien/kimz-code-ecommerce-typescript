@@ -3,9 +3,12 @@ import { addToCart } from "@store/cart/cartSlice";
 import { useAppDispatch } from "@store/hooks";
 import { useState } from "react";
 
-const Product = ({ id, title, price, img }: IProduct) => {
+const Product = ({ id, title, price, img, max, quantity }: IProduct) => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
+
+  const currentRemainingQuantity = max - (quantity ?? 0);
+  const quantityReachedMax = currentRemainingQuantity <= 0 ? true : false;
 
   const handleAddToCart = () => {
     setLoading(true);
@@ -33,14 +36,20 @@ const Product = ({ id, title, price, img }: IProduct) => {
           {title}
         </h2>
         <p className="text-gray-700 text-base">Price: {price} EGP</p>
+        <p>
+          {quantityReachedMax
+            ? "You reach to the limit"
+            : `You can add ${currentRemainingQuantity} item(s)`}
+        </p>
       </div>
       <div className="px-6 py-4">
         <button
           className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 w-full"
           onClick={handleAddToCart}
-          disabled={loading}
+          disabled={loading || quantityReachedMax}
         >
-          {loading ? "Adding" : "Add to Cart"}
+          {loading ? "Adding" : quantityReachedMax ? "Out of stock" : "Add to Cart"}
+
         </button>
       </div>
     </div>
