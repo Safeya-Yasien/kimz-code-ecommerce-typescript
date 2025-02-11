@@ -15,7 +15,8 @@
       "@pages/*": ["src/pages/*"],
       "@redux/*": ["src/redux/*"],
       "@routes/*": ["src/routes/*"],
-      "@layouts/*": ["src/layouts/*"]
+      "@layouts/*": ["src/layouts/*"],
+      "@assets/*": ["src/assets/*"]
     },
 
     /* Bundler mode */
