@@ -1,149 +1,68 @@
-import { HeaderBasket } from "@components/eCommerce";
-import cn from "@lib/utlis";
-import { Link, NavLink } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router";
+import { Menu, X } from "lucide-react";
+import MobileMenu from "./MobileMenu";
+import HeaderBasket from "./HeaderBasket";
 
 const Header = () => {
-  return (
-    <header className="fixed top-0 left-0 w-full z-50">
-      <div
-        className="flex items-center justify-between 
-     bg-gray-50 md:bg-white px-8 py-3"
-      >
-        <ul className="font-medium flex flex-col border border-gray-100 r  md:flex-row md:space-x-8 rtl:space-x-reverse md:border-0  ">
-          <li>
-            <NavLink
-              to="login"
-              className={({ isActive }) =>
-                cn(
-                  "block py-2 px-3 text-gray-900 rounded hover:text-blue-600",
-                  isActive ? "text-blue-700 " : "text-black"
-                )
-              }
-            >
-              Login
-            </NavLink>
-          </li>
+  const [isOpen, setIsOpen] = useState(false);
+  const cartItemCount = 3; // Replace with dynamic state later
 
-          <li>
-            <NavLink
-              to="register"
-              className={({ isActive }) =>
-                cn(
-                  "block py-2 px-3 text-gray-900 rounded hover:text-blue-600",
-                  isActive ? "text-blue-700 " : "text-black"
-                )
-              }
-            >
-              Register
-            </NavLink>
-          </li>
-        </ul>
-        <HeaderBasket />
+  return (
+    <header className="fixed top-0 left-0 w-full z-50 bg-gray-900 shadow-lg">
+      <div className="container mx-auto flex justify-between items-center p-4 px-8 lg:px-16">
+        <h1 className="text-3xl font-bold text-white flex items-center">
+          <span>Our</span>
+          <span className="ml-2 text-blue-500">eCom</span>
+        </h1>
+
+        <div className="flex items-center space-x-4 md:hidden">
+          <HeaderBasket cartItemCount={cartItemCount} />
+          <button
+            className="text-white cursor-pointer"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle Menu"
+          >
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
+
+        <nav className="hidden md:flex space-x-6">
+          <NavLink to="/" className="text-white hover:text-blue-400 transition">
+            Home
+          </NavLink>
+          <NavLink
+            to="/categories"
+            className="text-white hover:text-blue-400 transition"
+          >
+            Categories
+          </NavLink>
+          <NavLink
+            to="/about-us"
+            className="text-white hover:text-blue-400 transition"
+          >
+            About
+          </NavLink>
+        </nav>
+
+        <div className="hidden md:flex items-center space-x-4">
+          <NavLink
+            to="/login"
+            className="text-white hover:text-blue-400 transition"
+          >
+            Login
+          </NavLink>
+          <NavLink
+            to="/register"
+            className="text-white hover:text-blue-400 transition"
+          >
+            Register
+          </NavLink>
+          <HeaderBasket cartItemCount={cartItemCount} />
+        </div>
       </div>
 
-      <nav className="bg-white border-gray-200 dark:bg-gray-900 ">
-        <div className="flex flex-wrap items-center justify-between mx-auto py-4 px-8">
-          <Link to="/" className="flex items-center space-x-3 ">
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              Our Ecom
-            </span>
-          </Link>
-          <button
-            data-collapse-toggle="navbar-default"
-            type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-default"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
-          <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-              <li>
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    cn(
-                      "block py-2 px-3 text-white rounded hover:text-blue-600",
-                      isActive ? "text-blue-700 " : "text-white"
-                    )
-                  }
-                  aria-current="page"
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="categories"
-                  className={({ isActive }) =>
-                    cn(
-                      "block py-2 px-3 text-white rounded hover:text-blue-600",
-                      isActive ? "text-blue-700 " : "text-white"
-                    )
-                  }
-                >
-                  Categories
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="about"
-                  className={({ isActive }) =>
-                    cn(
-                      "block py-2 px-3 text-white rounded hover:text-blue-600",
-                      isActive ? "text-blue-700 " : "text-white"
-                    )
-                  }
-                >
-                  About
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="products"
-                  className={({ isActive }) =>
-                    cn(
-                      "block py-2 px-3 text-white rounded hover:text-blue-600",
-                      isActive ? "text-blue-700 " : "text-white"
-                    )
-                  }
-                >
-                  Products
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="contact"
-                  className={({ isActive }) =>
-                    cn(
-                      "block py-2 px-3 text-white rounded hover:text-blue-600",
-                      isActive ? "text-blue-700 " : "text-white"
-                    )
-                  }
-                >
-                  Contact
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
     </header>
   );
 };

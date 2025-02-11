@@ -1,16 +1,16 @@
-import { Footer, Header } from "@components/common";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
+import Header from "../../components/common/Header/Header";
+import Footer from "../../components/common/Footer/Footer";
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="w-full h-screen flex flex-col">
       <Header />
-      <div className="container mx-auto pt-36">
+      <main className="flex-1 overflow-auto pt-16">
         <Outlet />
-      </div>
+      </main>
       <Footer />
     </div>
   );
 };
-
 export default MainLayout;
