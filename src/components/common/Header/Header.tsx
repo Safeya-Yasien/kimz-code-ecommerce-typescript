@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 import HeaderBasket from "./HeaderBasket";
@@ -11,10 +11,13 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-gray-900 shadow-lg">
       <div className="container mx-auto flex justify-between items-center p-4 px-8 lg:px-16">
-        <h1 className="text-3xl font-bold text-white flex items-center">
+        <Link
+          to={"/"}
+          className="text-3xl font-bold text-white flex items-center"
+        >
           <span>Our</span>
           <span className="ml-2 text-blue-500">eCom</span>
-        </h1>
+        </Link>
 
         <div className="flex items-center space-x-4 md:hidden">
           <HeaderBasket cartItemCount={cartItemCount} />

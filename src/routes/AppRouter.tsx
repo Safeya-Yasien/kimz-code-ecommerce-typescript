@@ -55,8 +55,8 @@ const router = createBrowserRouter([
             !/^[a-z]+$/i.test(params.prefix)
           ) {
             throw new Response("Bad Request", {
-              statusText: "Category not found",
               status: 400,
+              statusText: "Category not found",
             });
           }
           return true;
