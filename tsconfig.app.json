@@ -13,10 +13,13 @@
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
-      "@redux/*": ["src/redux/*"],
       "@routes/*": ["src/routes/*"],
       "@layouts/*": ["src/layouts/*"],
-      "@assets/*": ["src/assets/*"]
+      "@types/*": ["src/types/*"],
+      "@assets/*": ["src/assets/*"],
+      "@store/*": ["src/store/*"],
+      "@utlis/*": ["src/utlis/*"],
+      "@services/*": ["src/services/*"]
     },
 
     /* Bundler mode */

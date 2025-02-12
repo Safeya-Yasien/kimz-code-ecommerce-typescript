@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const Footer = () => {
   return (
@@ -6,7 +6,9 @@ const Footer = () => {
       <div className="container mx-auto px-6 lg:px-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center md:text-left">
           <div>
-            <h2 className="text-2xl font-bold text-blue-500">Our eCom</h2>
+            <Link to={"/"} className="text-2xl font-bold text-blue-500">
+              Our eCom
+            </Link>
             <p className="mt-2 text-gray-400">
               Your go-to place for amazing products at great prices.
             </p>
