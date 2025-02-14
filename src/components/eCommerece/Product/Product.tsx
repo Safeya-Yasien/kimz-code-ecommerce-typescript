@@ -39,7 +39,11 @@ const Product = ({ title, price, img }: ProductProps) => {
       {/* Product Info */}
       <div className="mt-4">
         <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
-        <p className="text-gray-600">${price.toFixed(2)}</p>
+        <p className="text-gray-600">
+          {typeof price === "number"
+            ? `$${price.toFixed(2)}`
+            : "Price not available"}
+        </p>
 
         {/* Wishlist Button */}
         <div

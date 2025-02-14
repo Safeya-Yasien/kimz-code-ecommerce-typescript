@@ -8,7 +8,7 @@ const MainLayout = () => {
       <main className="flex-1 overflow-auto pt-16">
         <Outlet />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
