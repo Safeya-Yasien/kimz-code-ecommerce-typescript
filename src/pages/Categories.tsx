@@ -5,9 +5,7 @@ import { useEffect } from "react";
 
 const Categories = () => {
   const dispatch = useAppDispatch();
-  const { loading, error, records } = useAppSelector(
-    (state) => state.categories
-  );
+  const { records } = useAppSelector((state) => state.categories);
 
   useEffect(() => {
     dispatch(actGetCategories());
@@ -18,10 +16,6 @@ const Categories = () => {
       <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
         Categories
       </h2>
-
-      {/* Loading & Error Handling */}
-      {loading && <p className="text-center">Loading...</p>}
-      {error && <p className="text-center text-red-500">Error: {error}</p>}
 
       {/* Grid Layout for Categories */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

@@ -70,7 +70,7 @@ const Product = ({ title, price, img }: ProductProps) => {
 
         {/* Add to Cart Button */}
         <button
-          className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg shadow hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg shadow hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
           disabled={isBtnDisabled}
           onClick={addToCartHandler}
         >
