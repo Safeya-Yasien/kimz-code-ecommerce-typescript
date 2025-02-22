@@ -8,8 +8,10 @@ const Categories = () => {
   const { records } = useAppSelector((state) => state.categories);
 
   useEffect(() => {
-    dispatch(actGetCategories());
-  }, [dispatch]);
+    if (!records.length) {
+      dispatch(actGetCategories());
+    }
+  }, [dispatch, records]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -19,9 +21,11 @@ const Categories = () => {
 
       {/* Grid Layout for Categories */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {records?.map((category) => (
-          <Category key={category.prefix} {...category} />
-        ))}
+        {records.length > 0
+          ? records.map((category) => (
+              <Category key={category.id} {...category} />
+            ))
+          : "there are no categories"}
       </div>
     </div>
   );

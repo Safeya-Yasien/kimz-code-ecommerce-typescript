@@ -1,5 +1,8 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { actGetProductsByCatPrefix } from "@/store/products/productsSlice";
+import {
+  actGetProductsByCatPrefix,
+  cleanUpProductsRecords,
+} from "@/store/products/productsSlice";
 import { useParams } from "react-router";
 import { useEffect } from "react";
 import { Product } from "@/components/eCommerece";
@@ -11,6 +14,10 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(actGetProductsByCatPrefix(params.prefix as string));
+
+    return () => {
+      dispatch(cleanUpProductsRecords());
+    };
   }, [dispatch, params]);
 
   return (
