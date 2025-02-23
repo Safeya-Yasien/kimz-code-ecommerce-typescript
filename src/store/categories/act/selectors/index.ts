@@ -11,5 +11,5 @@ const getCartTotalQuantitySelector = createSelector(
     return cartItemCount;
   }
 );
-
+ 
 export { getCartTotalQuantitySelector };
