@@ -24,17 +24,19 @@ const Product = ({ title, price, img }: ProductProps) => {
   return (
     <div className="w-full max-w-sm bg-white shadow-lg rounded-lg overflow-hidden p-4">
       {/* Product Image */}
-      <img
-        src={imageSrc}
-        alt={title}
-        loading="lazy"
-        className="w-full h-48 object-cover rounded-md"
-        onError={() =>
-          setImageSrc(
-            "https://via.placeholder.com/500x300?text=Image+Not+Found"
-          )
-        }
-      />
+      <div className="w-full h-48 rounded-md">
+        <img
+          src={imageSrc}
+          alt={title}
+          loading="lazy"
+          className="w-full h-full object-contain "
+          onError={() =>
+            setImageSrc(
+              "https://via.placeholder.com/500x300?text=Image+Not+Found"
+            )
+          }
+        />
+      </div>
 
       {/* Product Info */}
       <div className="mt-4">

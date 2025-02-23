@@ -6,7 +6,7 @@ import HeaderBasket from "./HeaderBasket";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const cartItemCount = 3; // Replace with dynamic state later
+  const cartItemCount = 3;
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-gray-900 shadow-lg">

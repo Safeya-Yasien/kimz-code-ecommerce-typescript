@@ -1,3 +1,4 @@
+import { GridList } from "@/components/common";
 import { Category } from "@/components/eCommerece";
 import actGetCategories from "@/store/categories/act/actGetCategories";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -19,14 +20,12 @@ const Categories = () => {
         Categories
       </h2>
 
-      {/* Grid Layout for Categories */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {records.length > 0
-          ? records.map((category) => (
-              <Category key={category.id} {...category} />
-            ))
-          : "there are no categories"}
-      </div>
+      {/* Categories Grid */}
+      <GridList
+        records={records}
+        emptyMessage="there are no categories"
+        renderItem={(category) => <Category {...category} />}
+      />
     </div>
   );
 };

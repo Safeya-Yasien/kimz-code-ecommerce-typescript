@@ -6,11 +6,12 @@ import {
 import { useParams } from "react-router";
 import { useEffect } from "react";
 import { Product } from "@/components/eCommerece";
+import { GridList } from "@/components/common";
 
 const Products = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const { loading, records } = useAppSelector((state) => state.products);
+  const { records } = useAppSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(actGetProductsByCatPrefix(params.prefix as string));
@@ -18,7 +19,7 @@ const Products = () => {
     return () => {
       dispatch(cleanUpProductsRecords());
     };
-  }, [dispatch, params]);
+  }, [dispatch, params.prefix]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -26,16 +27,11 @@ const Products = () => {
         Products
       </h2>
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {records.length > 0
-          ? records.map((product) => <Product key={product.id} {...product} />)
-          : !loading && (
-              <p className="text-center text-gray-500 col-span-full">
-                No products found.
-              </p>
-            )}
-      </div>
+      <GridList
+        records={records}
+        emptyMessage={"No products found."}
+        renderItem={(product) => <Product {...product} />}
+      />
     </div>
   );
 };

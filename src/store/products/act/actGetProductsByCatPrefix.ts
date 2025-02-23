@@ -13,6 +13,9 @@ const actGetProductsByCatPrefix = createAsyncThunk(
       const response = await axios.get<TResponse>(
         `/products?cat_prefix=${prefix}`
       );
+
+      console.log('response produts', response.data)
+
       return response.data;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));
