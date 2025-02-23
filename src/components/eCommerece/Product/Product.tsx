@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { Heart, HeartOff, Loader2 } from "lucide-react";
 import { useAppDispatch } from "@/store/hooks";
 import { addToCart } from "@/store/cart/cartSlice";
 import { TProduct } from "@/types";
 
-const Product = ({ id, title, price, img, max, quantity }: TProduct) => {
+const Product = memo(({ id, title, price, img, max, quantity }: TProduct) => {
   const dispatch = useAppDispatch();
 
   const [isLiked, setIsLiked] = useState(false);
@@ -89,6 +89,6 @@ const Product = ({ id, title, price, img, max, quantity }: TProduct) => {
       </div>
     </div>
   );
-};
+});
 
 export default Product;
