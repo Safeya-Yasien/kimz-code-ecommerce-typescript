@@ -12,6 +12,12 @@ const Products = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const { records } = useAppSelector((state) => state.products);
+  const cartItems = useAppSelector((state) => state.cart.items);
+
+  const productsFullInfo = records.map((el) => ({
+    ...el,
+    quantity: cartItems[el.id] || 0, // Ensures each product has a quantity property, even if it's not in the cart.
+  }));
 
   useEffect(() => {
     dispatch(actGetProductsByCatPrefix(params.prefix as string));
@@ -28,7 +34,7 @@ const Products = () => {
       </h2>
 
       <GridList
-        records={records}
+        records={productsFullInfo}
         emptyMessage={"No products found."}
         renderItem={(product) => <Product key={product.id} {...product} />}
       />

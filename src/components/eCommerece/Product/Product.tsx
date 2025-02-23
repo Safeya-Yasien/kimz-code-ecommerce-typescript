@@ -4,13 +4,11 @@ import { useAppDispatch } from "@/store/hooks";
 import { addToCart } from "@/store/cart/cartSlice";
 import { TProduct } from "@/types";
 
-const Product = ({ id, title, price, img }: TProduct) => {
+const Product = ({ id, title, price, img, max, quantity }: TProduct) => {
   const dispatch = useAppDispatch();
 
   const [isLiked, setIsLiked] = useState(false);
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
-  const [quantityReachedToMax] = useState(false);
-  const currentRemainingQuantity = 5;
   const [imageSrc, setImageSrc] = useState(img);
 
   const likeToggleHandler = () => setIsLiked((prev) => !prev);
@@ -23,6 +21,9 @@ const Product = ({ id, title, price, img }: TProduct) => {
       setIsBtnDisabled(false);
     }, 300);
   };
+
+  const currentRemainingQuantity = max - (quantity ?? 0);
+  const quantityReachedToMax = currentRemainingQuantity <= 0 ? true : false;
 
   return (
     <div className="w-full max-w-sm bg-white shadow-lg rounded-lg overflow-hidden p-4">
@@ -76,7 +77,7 @@ const Product = ({ id, title, price, img }: TProduct) => {
         {/* Add to Cart Button */}
         <button
           className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg shadow hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
-          disabled={isBtnDisabled}
+          disabled={isBtnDisabled || quantityReachedToMax}
           onClick={addToCartHandler}
         >
           {isBtnDisabled ? (
