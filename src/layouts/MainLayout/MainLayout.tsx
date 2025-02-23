@@ -1,4 +1,4 @@
-import { Header } from "@/components/common";
+import { Footer, Header } from "@/components/common";
 import { Outlet } from "react-router";
 
 const MainLayout = () => {
@@ -8,7 +8,7 @@ const MainLayout = () => {
       <main className="flex-1 overflow-auto pt-16">
         <Outlet />
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
