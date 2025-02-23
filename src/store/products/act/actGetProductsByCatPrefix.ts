@@ -14,14 +14,11 @@ const actGetProductsByCatPrefix = createAsyncThunk(
         `/products?cat_prefix=${prefix}`
       );
 
-      console.log('response produts', response.data)
-
       return response.data;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));
     }
   }
 );
-
 
 export default actGetProductsByCatPrefix;

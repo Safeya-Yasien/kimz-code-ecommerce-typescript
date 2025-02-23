@@ -30,7 +30,7 @@ const Products = () => {
       <GridList
         records={records}
         emptyMessage={"No products found."}
-        renderItem={(product) => <Product {...product} />}
+        renderItem={(product) => <Product key={product.id} {...product} />}
       />
     </div>
   );
