@@ -11,7 +11,7 @@ import { GridList, Heading } from "@/components/common";
 const Products = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const { records } = useAppSelector((state) => state.products);
+  const { records, loading } = useAppSelector((state) => state.products);
   const cartItems = useAppSelector((state) => state.cart.items);
 
   const productsFullInfo = records.map((el) => ({
@@ -31,11 +31,19 @@ const Products = () => {
     <div className="container mx-auto px-4 py-8">
       <Heading title={"Products"} />
 
-      <GridList
-        records={productsFullInfo}
-        emptyMessage={"No products found."}
-        renderItem={(product) => <Product key={product.id} {...product} />}
-      />
+      {loading === "pending" && records.length > 0 ? (
+        <p className="text-center text-gray-500">Loading new products...</p>
+      ) : loading === "pending" ? (
+        <p className="text-center text-xl font-semibold">Loading...</p>
+      ) : records.length === 0 ? (
+        <p className="text-center text-gray-500">No products found.</p>
+      ) : (
+        <GridList
+          records={productsFullInfo}
+          emptyMessage={"No products found."}
+          renderItem={(product) => <Product key={product.id} {...product} />}
+        />
+      )}
     </div>
   );
 };
