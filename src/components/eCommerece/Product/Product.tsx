@@ -18,6 +18,10 @@ const Product = ({ id, title, price, img }: TProduct) => {
   const addToCartHandler = () => {
     setIsBtnDisabled(true);
     dispatch(addToCart(id));
+
+    setTimeout(() => {
+      setIsBtnDisabled(false);
+    }, 300);
   };
 
   return (
