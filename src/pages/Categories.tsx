@@ -1,4 +1,4 @@
-import { GridList } from "@/components/common";
+import { GridList, Heading } from "@/components/common";
 import { Category } from "@/components/eCommerece";
 import actGetCategories from "@/store/categories/act/actGetCategories";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -16,9 +16,7 @@ const Categories = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-        Categories
-      </h2>
+      <Heading title={"Categories"} />
 
       {/* Categories Grid */}
       <GridList

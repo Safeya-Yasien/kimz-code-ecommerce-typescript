@@ -6,7 +6,7 @@ import {
 import { useParams } from "react-router";
 import { useEffect } from "react";
 import { Product } from "@/components/eCommerece";
-import { GridList } from "@/components/common";
+import { GridList, Heading } from "@/components/common";
 
 const Products = () => {
   const params = useParams();
@@ -29,9 +29,7 @@ const Products = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-        Products
-      </h2>
+      <Heading title={"Products"} />
 
       <GridList
         records={productsFullInfo}
