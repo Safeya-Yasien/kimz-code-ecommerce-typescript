@@ -3,10 +3,13 @@ import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 import HeaderBasket from "./HeaderBasket";
+import { useAppSelector } from "@/store/hooks";
+import { getCartTotalQuantitySelector } from "@/store/categories/act/selectors";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const cartItemCount = 3;
+
+  const cartItemCount = useAppSelector(getCartTotalQuantitySelector);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-gray-900 shadow-lg">

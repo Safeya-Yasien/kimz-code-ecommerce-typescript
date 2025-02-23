@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Heart, HeartOff, Loader2 } from "lucide-react";
+import { useAppDispatch } from "@/store/hooks";
+import { addToCart } from "@/store/cart/cartSlice";
+import { TProduct } from "@/types";
 
-type ProductProps = {
-  title: string;
-  price: number;
-  img: string;
-};
+const Product = ({ id, title, price, img }: TProduct) => {
+  const dispatch = useAppDispatch();
 
-const Product = ({ title, price, img }: ProductProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
   const [quantityReachedToMax] = useState(false);
@@ -18,7 +17,7 @@ const Product = ({ title, price, img }: ProductProps) => {
 
   const addToCartHandler = () => {
     setIsBtnDisabled(true);
-    setTimeout(() => setIsBtnDisabled(false), 2000);
+    dispatch(addToCart(id));
   };
 
   return (
