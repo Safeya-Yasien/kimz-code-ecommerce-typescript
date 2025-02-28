@@ -17,21 +17,12 @@ const actGetProductsByItems = createAsyncThunk(
     }
 
     try {
-      // MockAPI.io not support multiple ids
-      //   const concatenatedItemsId = itemsId.map((el) => `id=${el}`).join("&");
-      //   const response = await axios.get<TResponse>(
-      //     `/products?${concatenatedItemsId}`
-      //   );
-
+      const concatenatedItemsId = itemsId.map((el) => `id=${el}`).join("&");
       const response = await axios.get<TResponse>(
-        "https://67bb3e0bfbe0387ca1398bac.mockapi.io/products"
+        `/products?${concatenatedItemsId}`
       );
 
-      const filteredProducts = response.data.filter((product) =>
-        itemsId.includes(product.id.toString())
-      );
-
-      return filteredProducts;
+      return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return rejectWithValue(error.response?.data.message || error.message);
