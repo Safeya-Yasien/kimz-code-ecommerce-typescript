@@ -10,6 +10,7 @@ const actLikeToggle = createAsyncThunk(
       const isRecordExist = await axios.get(
         `/wishlist?userId=1&productId=${id}`
       );
+
       if (isRecordExist.data.length > 0) {
         await axios.delete(`/wishlist/${isRecordExist.data[0].id}`);
         return { type: "remove", id };
