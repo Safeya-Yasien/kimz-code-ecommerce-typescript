@@ -1,11 +1,11 @@
 import { NavLink } from "react-router";
 import { ShoppingCart } from "lucide-react";
+import { useAppSelector } from "@/store/hooks";
+import { getCartTotalQuantitySelector } from "@/store/categories/act/selectors";
 
-interface BasketProps {
-  cartItemCount: number;
-}
+const HeaderBasket = () => {
+  const cartItemCount = useAppSelector(getCartTotalQuantitySelector);
 
-const Basket = ({ cartItemCount }: BasketProps) => {
   return (
     <NavLink
       to="/cart"
@@ -21,4 +21,4 @@ const Basket = ({ cartItemCount }: BasketProps) => {
   );
 };
 
-export default Basket;
+export default HeaderBasket;

@@ -3,14 +3,10 @@ import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 import HeaderBasket from "./HeaderBasket";
-import { useAppSelector } from "@/store/hooks";
-import { getCartTotalQuantitySelector } from "@/store/categories/act/selectors";
 import HeaderWishlist from "./HeaderWishlist";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const cartItemCount = useAppSelector(getCartTotalQuantitySelector);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-gray-900 shadow-lg">
@@ -24,7 +20,7 @@ const Header = () => {
         </Link>
 
         <div className="flex items-center space-x-4 md:hidden">
-          <HeaderBasket cartItemCount={cartItemCount} />
+          <HeaderBasket />
           <HeaderWishlist />
           <button
             className="text-white cursor-pointer"
@@ -66,7 +62,7 @@ const Header = () => {
           >
             Register
           </NavLink>
-          <HeaderBasket cartItemCount={cartItemCount} />
+          <HeaderBasket />
           <HeaderWishlist />
         </div>
       </div>
