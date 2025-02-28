@@ -5,6 +5,7 @@ import MobileMenu from "./MobileMenu";
 import HeaderBasket from "./HeaderBasket";
 import { useAppSelector } from "@/store/hooks";
 import { getCartTotalQuantitySelector } from "@/store/categories/act/selectors";
+import HeaderWishlist from "./HeaderWishlist";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +25,7 @@ const Header = () => {
 
         <div className="flex items-center space-x-4 md:hidden">
           <HeaderBasket cartItemCount={cartItemCount} />
+          <HeaderWishlist />
           <button
             className="text-white cursor-pointer"
             onClick={() => setIsOpen(!isOpen)}
@@ -65,6 +67,7 @@ const Header = () => {
             Register
           </NavLink>
           <HeaderBasket cartItemCount={cartItemCount} />
+          <HeaderWishlist />
         </div>
       </div>
 
