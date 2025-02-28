@@ -1,8 +1,9 @@
 import { NavLink } from "react-router";
 import { Heart } from "lucide-react";
+import { useAppSelector } from "@/store/hooks";
 
 const HeaderWishlist = () => {
-  const wishlistItemCount = 3;
+  const totalQuantity = useAppSelector((state) => state.wishlist.itemsId);
 
   return (
     <NavLink
@@ -10,9 +11,9 @@ const HeaderWishlist = () => {
       className="relative text-white hover:text-blue-400 transition"
     >
       <Heart size={26} />
-      {wishlistItemCount > 0 && (
+      {totalQuantity.length > 0 && (
         <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-          {wishlistItemCount}
+          {totalQuantity.length}
         </span>
       )}
     </NavLink>

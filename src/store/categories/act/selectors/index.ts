@@ -11,5 +11,13 @@ const getCartTotalQuantitySelector = createSelector(
     return cartItemCount;
   }
 );
- 
-export { getCartTotalQuantitySelector };
+
+const getWishlistTotalQuantitySelector = createSelector(
+  (state: RootState) => state.whitelist.itemsId,
+  (itemsId) => {
+    // const wishlistItemCount = Object.values(items).reduce;
+    console.log("whitelist items count", itemsId);
+  }
+);
+
+export { getCartTotalQuantitySelector, getWishlistTotalQuantitySelector };

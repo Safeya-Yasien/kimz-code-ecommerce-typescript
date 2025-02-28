@@ -13,10 +13,12 @@ const Products = () => {
   const dispatch = useAppDispatch();
   const { records } = useAppSelector((state) => state.products);
   const cartItems = useAppSelector((state) => state.cart.items);
+  const wishlistItemsId = useAppSelector((state) => state.wishlist.itemsId);
 
   const productsFullInfo = records.map((el) => ({
     ...el,
     quantity: cartItems[el.id] || 0, // Ensures each product has a quantity property, even if it's not in the cart.
+    isLiked: wishlistItemsId.includes(el.id),
   }));
 
   useEffect(() => {
