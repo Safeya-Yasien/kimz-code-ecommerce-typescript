@@ -1,5 +1,5 @@
 import { TProduct } from "@/types";
-import axiosErrorHandler from "@/utils/axiosErrorHandler";
+import { axiosErrorHandler } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "@services/axios-global";
 
