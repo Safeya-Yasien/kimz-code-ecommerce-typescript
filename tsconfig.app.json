@@ -19,7 +19,8 @@
       "@assets/*": ["src/assets/*"],
       "@store/*": ["src/store/*"],
       "@utlis/*": ["src/utlis/*"],
-      "@services/*": ["src/services/*"]
+      "@services/*": ["src/services/*"],
+      "@hooks/*": ["src/hooks/*"]
     },
 
     /* Bundler mode */

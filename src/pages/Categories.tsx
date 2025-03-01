@@ -1,25 +1,13 @@
 import { GridList, Heading } from "@/components/common";
 import { Category } from "@/components/eCommerece";
-import actGetCategories from "@/store/categories/act/actGetCategories";
-import { categoriesRecordsCleanUp } from "@/store/categories/categoriesSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { useEffect } from "react";
+import useCategories from "@/hooks/useCategories";
 
 const Categories = () => {
-  const dispatch = useAppDispatch();
-  const { records } = useAppSelector((state) => state.categories);
-
-  useEffect(() => {
-    dispatch(actGetCategories());
-
-    return () => {
-      dispatch(categoriesRecordsCleanUp());
-    };
-  }, [dispatch]);
+  const { records } = useCategories();
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Heading title="Categories"/>
+      <Heading title="Categories" />
 
       {/* Categories Grid */}
       <GridList
