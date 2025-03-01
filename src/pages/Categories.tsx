@@ -1,6 +1,7 @@
 import { GridList, Heading } from "@/components/common";
 import { Category } from "@/components/eCommerece";
 import actGetCategories from "@/store/categories/act/actGetCategories";
+import { categoriesRecordsCleanUp } from "@/store/categories/categoriesSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
 
@@ -9,14 +10,16 @@ const Categories = () => {
   const { records } = useAppSelector((state) => state.categories);
 
   useEffect(() => {
-    if (!records.length) {
-      dispatch(actGetCategories());
-    }
-  }, [dispatch, records]);
+    dispatch(actGetCategories());
+
+    return () => {
+      dispatch(categoriesRecordsCleanUp());
+    };
+  }, [dispatch]);
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Heading>Categories</Heading>
+      <Heading title="Categories"/>
 
       {/* Categories Grid */}
       <GridList

@@ -3,7 +3,7 @@ import { Heading } from "@/components/common";
 const AboutUs = () => {
   return (
     <div className="container mx-auto px-4 py-8">
-      <Heading> About Us</Heading>
+      <Heading title="About Us" />
 
       {/* Introduction Section */}
       <section className="max-w-3xl mx-auto text-center">
