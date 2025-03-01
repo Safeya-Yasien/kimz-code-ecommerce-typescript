@@ -2,7 +2,7 @@ import { GridList, Heading } from "@/components/common";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   actGetWishlist,
-  productsFullInfoCleanUp,
+  cleanWishlistProductsFullInfo,
 } from "@/store/wishlist/wishlistSlice";
 import { useEffect } from "react";
 import { TProduct } from "@/types";
@@ -16,7 +16,7 @@ const Wishlist = () => {
   useEffect(() => {
     dispatch(actGetWishlist());
     return () => {
-      dispatch(productsFullInfoCleanUp());
+      dispatch(cleanWishlistProductsFullInfo());
     };
   }, [dispatch]);
 
@@ -28,7 +28,7 @@ const Wishlist = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Heading>Your Wishlist</Heading>
+      <Heading title="Your Wishlist" />
 
       <GridList<TProduct>
         records={records}

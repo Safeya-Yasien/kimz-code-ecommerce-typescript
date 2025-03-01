@@ -4,6 +4,7 @@ import {
   actGetProductsByItems,
   cartItemChangeQuantity,
   cartItemRemove,
+  cleanCartProductsFullInfo,
 } from "@/store/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useCallback, useEffect } from "react";
@@ -15,6 +16,10 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(actGetProductsByItems());
+
+    return () => {
+      dispatch(cleanCartProductsFullInfo());
+    };
   }, [dispatch]);
 
   const products = productsFullInfo.map((el) => ({
@@ -38,7 +43,7 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Heading>Your Cart</Heading>
+      <Heading title="Your Cart" />
 
       {/* Cart Items List */}
       {products.length ? (
