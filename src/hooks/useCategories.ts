@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 const useCategories = () => {
   const dispatch = useAppDispatch();
-  const { records } = useAppSelector((state) => state.categories);
+  const { records, loading, error } = useAppSelector((state) => state.categories);
 
   useEffect(() => {
     const promise = dispatch(actGetCategories());
@@ -16,7 +16,7 @@ const useCategories = () => {
     };
   }, [dispatch]);
 
-  return { records };
+  return { records,loading, error };
 };
 
 export default useCategories;

@@ -10,7 +10,7 @@ const useProducts = () => {
   const params = useParams();
   const productPrefix = params.prefix;
   const dispatch = useAppDispatch();
-  const { records } = useAppSelector((state) => state.products);
+  const { records, loading, error } = useAppSelector((state) => state.products);
   const cartItems = useAppSelector((state) => state.cart.items);
   const wishlistItemsId = useAppSelector((state) => state.wishlist.itemsId);
 
@@ -31,6 +31,6 @@ const useProducts = () => {
     isLiked: wishlistItemsId.includes(el.id),
   }));
 
-  return { productsFullInfo, productPrefix };
+  return { productsFullInfo, productPrefix, loading, error };
 };
 export default useProducts;

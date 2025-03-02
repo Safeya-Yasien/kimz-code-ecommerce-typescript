@@ -9,13 +9,15 @@ import { useCallback, useEffect } from "react";
 
 const useCart = () => {
   const dispatch = useAppDispatch();
-  const { items, productsFullInfo } = useAppSelector((state) => state.cart);
+  const { items, productsFullInfo, loading, error } = useAppSelector(
+    (state) => state.cart
+  );
 
   useEffect(() => {
-   const promise= dispatch(actGetProductsByItems());
+    const promise = dispatch(actGetProductsByItems());
 
     return () => {
-      promise.abort()
+      promise.abort();
       dispatch(cleanCartProductsFullInfo());
     };
   }, [dispatch]);
@@ -39,6 +41,6 @@ const useCart = () => {
     [dispatch]
   );
 
-return {products, changeQuantityHandler, removeItemHandler}
+  return { products, changeQuantityHandler, removeItemHandler, loading, error };
 };
 export default useCart;
