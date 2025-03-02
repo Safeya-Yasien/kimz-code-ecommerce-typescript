@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import CartSkeleton from "../skeletons/CartSkeleton";
 import CategorySkeleton from "../skeletons/CategorySkeleton";
 import ProductSkeleton from "../skeletons/ProductSkeleton";
+import LottieHandler from "../LottieHandler/LottieHandler";
 
 const skeletonsTypes = {
   category: CategorySkeleton,
@@ -29,7 +30,7 @@ const Loading = ({
   }
 
   if (status === "failed") {
-    return <div>error: {error}</div>;
+    return <LottieHandler type="error" message={error as string} />;
   }
 
   return <div>{children}</div>;

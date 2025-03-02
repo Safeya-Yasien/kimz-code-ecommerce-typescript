@@ -1,23 +1,19 @@
+import { LottieHandler } from "@/components/feedback";
+
 type TGridListProps<T> = {
   records: T[];
   renderItem: (item: T) => React.ReactNode;
-  emptyMessage: string;
+  message: string;
 };
 
-const GridList = <T,>({
-  records,
-  emptyMessage,
-  renderItem,
-}: TGridListProps<T>) => {
+const GridList = <T,>({ records, renderItem, message }: TGridListProps<T>) => {
+  if (records.length === 0) {
+    return <LottieHandler type="empty" message={message} />;
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {records.length > 0 ? (
-        records.map(renderItem)
-      ) : (
-        <p className="text-center text-gray-500 col-span-full">
-          {emptyMessage}
-        </p>
-      )}
+      {records.map(renderItem)}
     </div>
   );
 };
