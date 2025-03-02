@@ -10,7 +10,7 @@ const Products = () => {
     <div className="container mx-auto px-4 py-8">
       <Heading title={`${productPrefix} Products`} />
 
-      <Loading status={loading} error={error}>
+      <Loading status={loading} error={error} type="product">
         <GridList
           records={productsFullInfo}
           emptyMessage={"No products found."}

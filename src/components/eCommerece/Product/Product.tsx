@@ -29,7 +29,7 @@ const Product = memo(
     const quantityReachedToMax = currentRemainingQuantity <= 0 ? true : false;
 
     return (
-      <div className="w-full max-w-sm bg-white shadow-lg rounded-lg overflow-hidden p-4">
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden p-4">
         {/* Product Image */}
         <div className="w-full h-48 rounded-md">
           <img

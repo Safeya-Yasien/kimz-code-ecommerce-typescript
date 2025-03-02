@@ -10,7 +10,7 @@ const Categories = () => {
     <div className="container mx-auto px-4 py-8">
       <Heading title="Categories" />
 
-      <Loading status={loading} error={error}>
+      <Loading status={loading} error={error} type="category">
         {/* Categories Grid */}
         <GridList
           records={records}

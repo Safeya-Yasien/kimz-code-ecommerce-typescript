@@ -7,7 +7,9 @@ import { useEffect } from "react";
 
 const useWishlist = () => {
   const dispatch = useAppDispatch();
-  const { productsFullInfo } = useAppSelector((state) => state.wishlist);
+  const { productsFullInfo, loading, error } = useAppSelector(
+    (state) => state.wishlist
+  );
   const cartItems = useAppSelector((state) => state.cart.items);
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const useWishlist = () => {
     isLiked: true,
   }));
 
-  return { records };
+  return { records, loading, error };
 };
 
 export default useWishlist;

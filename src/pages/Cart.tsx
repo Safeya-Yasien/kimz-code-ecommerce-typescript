@@ -13,7 +13,7 @@ const Cart = () => {
     <div className="container mx-auto px-4 py-8">
       <Heading title="Your Cart" />
 
-      <Loading error={error} status={loading}>
+      <Loading error={error} status={loading} type="cart">
         {/* Cart Items List */}
         {products.length ? (
           <div className="mt-10 space-y-6 max-w-3xl mx-auto">
