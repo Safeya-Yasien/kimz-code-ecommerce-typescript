@@ -22,6 +22,9 @@ const Orders = lazy(() => import("@/pages/Orders"));
 // error
 import Error from "@/pages/Error";
 
+// components
+import { PageSuspenseFallback } from "@/components/feedback";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,38 +38,42 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <Suspense fallback="loading please wait..">
+          <PageSuspenseFallback>
             <Home />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
       },
       {
         path: "cart",
         element: (
-          <Suspense fallback="loading please wait..">
+          <PageSuspenseFallback>
             <Cart />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
       },
       {
         path: "wishlist",
         element: (
-          <Suspense fallback="loading please wait..">
+          <PageSuspenseFallback>
             <Wishlist />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
       },
       {
         path: "categories",
         element: (
-          <Suspense fallback="loading please wait..">
+          <PageSuspenseFallback>
             <Categories />
-          </Suspense>
+          </PageSuspenseFallback>
         ),
       },
       {
         path: "categories/products/:prefix",
-        element: <Products />,
+        element: (
+          <PageSuspenseFallback>
+            <Products />
+          </PageSuspenseFallback>
+        ),
         loader: ({ params }) => {
           if (
             typeof params.prefix !== "string" ||
@@ -82,15 +89,27 @@ const router = createBrowserRouter([
       },
       {
         path: "about-us",
-        element: <AboutUs />,
+        element: (
+          <PageSuspenseFallback>
+            <AboutUs />
+          </PageSuspenseFallback>
+        ),
       },
       {
         path: "login",
-        element: <Login />,
+        element: (
+          <PageSuspenseFallback>
+            <Login />
+          </PageSuspenseFallback>
+        ),
       },
       {
         path: "register",
-        element: <Register />,
+        element: (
+          <PageSuspenseFallback>
+            <Register />
+          </PageSuspenseFallback>
+        ),
       },
       {
         path: "profile",

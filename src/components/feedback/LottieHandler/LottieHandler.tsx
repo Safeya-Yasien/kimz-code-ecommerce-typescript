@@ -15,7 +15,7 @@ const lottieFiles = {
 
 type TLottieHandlerProps = {
   type: keyof typeof lottieFiles;
-  message: string;
+  message?: string;
 };
 
 const LottieHandler = ({ type, message }: TLottieHandlerProps) => {
@@ -24,12 +24,18 @@ const LottieHandler = ({ type, message }: TLottieHandlerProps) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <Lottie animationData={lottieAnimation} />
-      <Link
-        to="/categories"
-        className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
-      >
-        {message}
-      </Link>{" "}
+
+      {message &&
+        (["notFound", "empty", "error"].includes(type) ? (
+          <Link
+            to={"/categories"}
+            className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+          >
+            {message}
+          </Link>
+        ) : (
+          <p className="text-gray-600 text-lg">{message}</p>
+        ))}
     </div>
   );
 };
