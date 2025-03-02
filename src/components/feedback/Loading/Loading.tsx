@@ -13,7 +13,7 @@ type TLoadingProps = {
   children: ReactNode;
   status: string;
   error: null | string;
-  type?: "category" | "product" | "cart";
+  type?: keyof typeof skeletonsTypes;
 };
 
 const Loading = ({
