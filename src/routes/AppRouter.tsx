@@ -23,13 +23,19 @@ const Orders = lazy(() => import("@/pages/Orders"));
 import Error from "@/pages/Error";
 
 // components
-import { PageSuspenseFallback } from "@/components/feedback";
+import { LottieHandler, PageSuspenseFallback } from "@/components/feedback";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Suspense fallback="loading please wait..">
+      <Suspense
+        fallback={
+          <div className="mt-24">
+            <LottieHandler type="loading" message="Loading your content..." />
+          </div>
+        }
+      >
         <MainLayout />
       </Suspense>
     ),
