@@ -20,7 +20,8 @@
       "@store/*": ["src/store/*"],
       "@utlis/*": ["src/utlis/*"],
       "@services/*": ["src/services/*"],
-      "@hooks/*": ["src/hooks/*"]
+      "@hooks/*": ["src/hooks/*"],
+      "@validations/*": ["src/validations/*"]
     },
 
     /* Bundler mode */
