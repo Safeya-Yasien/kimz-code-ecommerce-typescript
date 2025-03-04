@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormValues, loginSchema } from "@/validations/loginSchema";
 import { Link } from "react-router";
 import { Heading } from "@/components/common";
+import { FormInput } from "@/components/Form";
 
 const Login = () => {
   const {
@@ -23,38 +24,22 @@ const Login = () => {
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md mx-auto">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              {...register("email")}
-              className="mt-1 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.email && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
+          <FormInput
+            name="email"
+            label="Email"
+            type="email"
+            error={errors.email?.message}
+            register={register}
+          />
 
           {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              {...register("password")}
-              className="mt-1 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.password && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
+          <FormInput
+            name="password"
+            label="Password"
+            type="password"
+            error={errors.password?.message}
+            register={register}
+          />
 
           {/* Submit Button */}
           <button

@@ -7,6 +7,7 @@ import {
   registerSchema,
 } from "@/validations/registerSchema";
 import { Link } from "react-router";
+import { FormInput } from "@/components/Form";
 
 const Register = () => {
   const {
@@ -15,6 +16,7 @@ const Register = () => {
     formState: { errors },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
+    mode: "onBlur",
   });
 
   const onSubmit = (data: RegisterFormValues) => {
@@ -29,90 +31,44 @@ const Register = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* First Name & Last Name */}
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                First Name
-              </label>
-              <input
-                type="text"
-                {...register("firstName")}
-                className="mt-1 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              {errors.firstName && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.firstName.message}
-                </p>
-              )}
-            </div>
+            <FormInput
+              name={"firstName"}
+              label="First Name"
+              error={errors.firstName?.message}
+              register={register}
+            />
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Last Name
-              </label>
-              <input
-                type="text"
-                {...register("lastName")}
-                className="mt-1 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              {errors.lastName && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.lastName.message}
-                </p>
-              )}
-            </div>
+            <FormInput
+              name="lastName"
+              label="Last Name"
+              error={errors.lastName?.message}
+              register={register}
+            />
           </div>
-
           {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              {...register("email")}
-              className="mt-1 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.email && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
-
+          <FormInput
+            name="email"
+            label="Email"
+            type="email"
+            error={errors.email?.message}
+            register={register}
+          />
           {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              {...register("password")}
-              className="mt-1 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.password && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-
+          <FormInput
+            name="password"
+            label="Password"
+            type="password"
+            error={errors.password?.message}
+            register={register}
+          />
           {/* Confirm Password */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              {...register("confirmPassword")}
-              className="mt-1 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.confirmPassword && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.confirmPassword.message}
-              </p>
-            )}
-          </div>
-
+          <FormInput
+            name="confirmPassword"
+            label="Confirm Password"
+            type="password"
+            error={errors.confirmPassword?.message}
+            register={register}
+          />
           {/* Submit Button */}
           <button
             type="submit"
