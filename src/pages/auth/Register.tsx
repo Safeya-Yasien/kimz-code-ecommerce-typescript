@@ -6,12 +6,19 @@ import {
   RegisterFormValues,
   registerSchema,
 } from "@/validations/registerSchema";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FormInput } from "@/components/Form";
 import useCheckEmailAvailability from "@/hooks/useCheckEmailAvailability";
 import { FocusEvent } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { actAuthRegister } from "@/store/auth/authSlice";
+import { Loader2 } from "lucide-react";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state) => state.auth);
+
   const {
     register,
     handleSubmit,
@@ -44,8 +51,11 @@ const Register = () => {
     }
   };
 
-  const onSubmit = (data: RegisterFormValues) => {
-    console.log("User Registered:", data);
+  const onSubmit = async (data: RegisterFormValues) => {
+    const { firstName, lastName, email, password } = data;
+    dispatch(actAuthRegister({ firstName, lastName, email, password }))
+      .unwrap()
+      .then(() => navigate("/login"));
   };
 
   return (
@@ -53,6 +63,12 @@ const Register = () => {
       <Heading title="Create an Account" />
 
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md mx-auto">
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-4">
+            {error || "Something went wrong. Please try again."}
+          </p>
+        )}
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* First Name & Last Name */}
           <div className="grid grid-cols-2 gap-4">
@@ -118,21 +134,26 @@ const Register = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className={`w-full text-white py-2 rounded-md transition duration-300
-                      ${
-                        emailAvailabilityStatus === "checking"
-                          ? "bg-gray-400 cursor-not-allowed opacity-70"
-                          : emailAvailabilityStatus === "notAvailable"
-                          ? "bg-red-500 cursor-not-allowed opacity-70"
-                          : "bg-blue-500 hover:bg-blue-600"
-                      }
-                  `}
+            className={`w-full flex justify-center items-center text-white py-2 rounded-md transition duration-300
+            ${
+              loading === "pending" ||
+              emailAvailabilityStatus === "checking" ||
+              emailAvailabilityStatus === "notAvailable"
+                ? "bg-gray-400 cursor-not-allowed opacity-70"
+                : "bg-blue-500 hover:bg-blue-600"
+            }
+        `}
             disabled={
+              loading === "pending" ||
               emailAvailabilityStatus === "checking" ||
               emailAvailabilityStatus === "notAvailable"
             }
           >
-            Register
+            {loading === "pending" ? (
+              <Loader2 className="animate-spin h-5 w-5 mr-2" />
+            ) : (
+              "Register"
+            )}
           </button>
         </form>
 
