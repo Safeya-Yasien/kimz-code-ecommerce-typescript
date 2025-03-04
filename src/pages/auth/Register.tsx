@@ -8,16 +8,41 @@ import {
 } from "@/validations/registerSchema";
 import { Link } from "react-router";
 import { FormInput } from "@/components/Form";
+import useCheckEmailAvailability from "@/hooks/useCheckEmailAvailability";
+import { FocusEvent } from "react";
 
 const Register = () => {
   const {
     register,
     handleSubmit,
+    trigger,
+    getFieldState,
     formState: { errors },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     mode: "onBlur",
   });
+
+  const {
+    emailAvailabilityStatus,
+    enteredEmail,
+    checkEmailAvailability,
+    resetCheckEmailAvailability,
+  } = useCheckEmailAvailability();
+
+  const emailOnBlurHandler = async (e: FocusEvent<HTMLInputElement>) => {
+    await trigger("email");
+    const value = e.target.value;
+    const { isDirty, invalid } = getFieldState("email");
+
+    if (isDirty && !invalid && enteredEmail !== value) {
+      // checking
+      checkEmailAvailability(value);
+    }
+    if (isDirty && invalid && enteredEmail) {
+      resetCheckEmailAvailability();
+    }
+  };
 
   const onSubmit = (data: RegisterFormValues) => {
     console.log("User Registered:", data);
@@ -50,9 +75,30 @@ const Register = () => {
             name="email"
             label="Email"
             type="email"
-            error={errors.email?.message}
+            error={
+              errors.email?.message
+                ? errors.email?.message
+                : emailAvailabilityStatus === "notAvailable"
+                ? "This email is already in use."
+                : emailAvailabilityStatus === "failed"
+                ? "Error from the server. Please try again."
+                : ""
+            }
+            formText={
+              emailAvailabilityStatus === "checking"
+                ? "We're currently checking the availability of this email address. Please wait a moment."
+                : ""
+            }
+            success={
+              emailAvailabilityStatus === "available"
+                ? "This email is available for use."
+                : ""
+            }
+            disabled={emailAvailabilityStatus === "checking"}
             register={register}
+            onBlur={emailOnBlurHandler}
           />
+
           {/* Password */}
           <FormInput
             name="password"
@@ -72,7 +118,19 @@ const Register = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
+            className={`w-full text-white py-2 rounded-md transition duration-300
+                      ${
+                        emailAvailabilityStatus === "checking"
+                          ? "bg-gray-400 cursor-not-allowed opacity-70"
+                          : emailAvailabilityStatus === "notAvailable"
+                          ? "bg-red-500 cursor-not-allowed opacity-70"
+                          : "bg-blue-500 hover:bg-blue-600"
+                      }
+                  `}
+            disabled={
+              emailAvailabilityStatus === "checking" ||
+              emailAvailabilityStatus === "notAvailable"
+            }
           >
             Register
           </button>
