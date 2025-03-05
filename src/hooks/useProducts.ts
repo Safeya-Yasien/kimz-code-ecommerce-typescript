@@ -13,6 +13,7 @@ const useProducts = () => {
   const { records, loading, error } = useAppSelector((state) => state.products);
   const cartItems = useAppSelector((state) => state.cart.items);
   const wishlistItemsId = useAppSelector((state) => state.wishlist.itemsId);
+  const userAccessToken = useAppSelector((state) => state.auth.accessToken);
 
   useEffect(() => {
     const promise = dispatch(
@@ -29,6 +30,7 @@ const useProducts = () => {
     ...el,
     quantity: cartItems[el.id] || 0,
     isLiked: wishlistItemsId.includes(el.id),
+    isAuthenticated: userAccessToken ? true : false,
   }));
 
   return { productsFullInfo, productPrefix, loading, error };

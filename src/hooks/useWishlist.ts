@@ -26,6 +26,7 @@ const useWishlist = () => {
     ...el,
     quantity: cartItems[el.id],
     isLiked: true,
+    isAuthenticated: true,
   }));
 
   return { records, loading, error };

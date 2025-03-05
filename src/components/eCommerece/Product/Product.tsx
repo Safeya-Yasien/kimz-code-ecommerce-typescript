@@ -6,11 +6,20 @@ import { TProduct } from "@/types";
 import { actLikeToggle } from "@/store/wishlist/wishlistSlice";
 
 const Product = memo(
-  ({ id, title, price, img, max, quantity, isLiked }: TProduct) => {
+  ({
+    id,
+    title,
+    price,
+    img,
+    max,
+    quantity,
+    isLiked,
+    isAuthenticated,
+  }: TProduct) => {
     const dispatch = useAppDispatch();
-
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [imageSrc, setImageSrc] = useState(img);
+    const [showModal, setShowModal] = useState(false);
 
     const addToCartHandler = () => {
       setIsBtnDisabled(true);
@@ -22,11 +31,19 @@ const Product = memo(
     };
 
     const likeToggleHandler = (id: number) => {
-      dispatch(actLikeToggle(id));
+      if (isAuthenticated) {
+        dispatch(actLikeToggle(id));
+      } else {
+        setShowModal(true);
+      }
+    };
+
+    const closeModal = () => {
+      setShowModal(false);
     };
 
     const currentRemainingQuantity = max - (quantity ?? 0);
-    const quantityReachedToMax = currentRemainingQuantity <= 0 ? true : false;
+    const quantityReachedToMax = currentRemainingQuantity <= 0;
 
     return (
       <div className="bg-white shadow-lg rounded-lg overflow-hidden p-4">
@@ -92,6 +109,26 @@ const Product = memo(
             "Add to Cart"
           )}
         </button>
+
+        {/* Modal for Unauthenticated Users */}
+        {showModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">
+                Authentication Required
+              </h2>
+              <p className="text-gray-600 mb-4">
+                You need to be logged in to add items to your wishlist.
+              </p>
+              <button
+                onClick={closeModal}
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
