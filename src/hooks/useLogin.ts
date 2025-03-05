@@ -1,11 +1,13 @@
+import { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router";
+
 import { useForm } from "react-hook-form";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormValues, loginSchema } from "@/validations/loginSchema";
-import { useNavigate, useSearchParams } from "react-router";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { actAuthLogin, resetUI } from "@/store/auth/authSlice";
-import { useEffect } from "react";
 
 const useLogin = () => {
   const [searchParams, setSearchParams] = useSearchParams();
