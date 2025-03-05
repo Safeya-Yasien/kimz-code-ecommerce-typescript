@@ -23,10 +23,16 @@ const cartPersistConfig = {
   whitelist: ["items"],
 };
 
-const wishlistPersistConfig = {
-  key: "wishlist",
+const rootPersistConfig = {
+  key: "root",
   storage,
-  whitelist: ["itemsId"],
+  whitelist: ["cart", "auth"],
+};
+
+const authPersistConfig = {
+  key: "auth",
+  storage,
+  whitelist: ["user", "accessToken"],
 };
 
 const rootReducer = combineReducers({
@@ -34,12 +40,14 @@ const rootReducer = combineReducers({
   products,
   // enable persistence (saving to localStorage)
   cart: persistReducer(cartPersistConfig, cart),
-  wishlist: persistReducer(wishlistPersistConfig, wishlist),
-  auth,
+  wishlist: wishlist,
+  auth: persistReducer(authPersistConfig, auth),
 });
 
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
+
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
 
   //  It helps with async actions, logging, error handling, and modifying dispatched actions.
   middleware: (getDefaultMiddleware) =>
