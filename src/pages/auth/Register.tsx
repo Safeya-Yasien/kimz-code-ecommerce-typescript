@@ -9,9 +9,9 @@ import {
 import { Link, useNavigate } from "react-router";
 import { FormInput } from "@/components/Form";
 import useCheckEmailAvailability from "@/hooks/useCheckEmailAvailability";
-import { FocusEvent } from "react";
+import { FocusEvent, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { actAuthRegister } from "@/store/auth/authSlice";
+import { actAuthRegister, resetUI } from "@/store/auth/authSlice";
 import { Loader2 } from "lucide-react";
 
 const Register = () => {
@@ -58,17 +58,17 @@ const Register = () => {
       .then(() => navigate("/login?message=account_created"));
   };
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetUI());
+    };
+  }, [dispatch]);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Heading title="Create an Account" />
 
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md mx-auto">
-        {error && (
-          <p className="text-red-500 text-sm text-center mb-4">
-            {error || "Something went wrong. Please try again."}
-          </p>
-        )}
-
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* First Name & Last Name */}
           <div className="grid grid-cols-2 gap-4">
@@ -156,6 +156,11 @@ const Register = () => {
             )}
           </button>
         </form>
+
+        {/* Display error message if it exists, below the form fields */}
+        {error && (
+          <p className="text-red-500 text-sm text-center mt-4">{error}</p>
+        )}
 
         {/* Login Redirect */}
         <p className="text-sm text-gray-600 text-center mt-4">

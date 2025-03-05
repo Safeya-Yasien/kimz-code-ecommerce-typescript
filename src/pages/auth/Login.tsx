@@ -4,12 +4,16 @@ import { LoginFormValues, loginSchema } from "@/validations/loginSchema";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { Heading } from "@/components/common";
 import { FormInput } from "@/components/Form";
-import { useAppDispatch } from "@/store/hooks";
-import actAuthLogin from "@/store/auth/act/actAuthLogin";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { actAuthLogin, resetUI } from "@/store/auth/authSlice";
+import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
 
 const Login = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const message = searchParams.get("message");
+
+  const { error, loading } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -24,10 +28,19 @@ const Login = () => {
   });
 
   const onSubmit = (data: LoginFormValues) => {
+    if (message) {
+      setSearchParams("");
+    }
     dispatch(actAuthLogin(data))
       .unwrap()
       .then(() => navigate("/"));
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetUI());
+    };
+  }, [dispatch]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -60,11 +73,21 @@ const Login = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
+            className="w-full flex justify-center items-center text-white py-2 rounded-md transition duration-300
+              bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            disabled={loading === "pending"}
           >
-            Login
+            {loading === "pending" ? (
+              <Loader2 className="animate-spin h-5 w-5 mr-2" />
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
+        {/* Display error message if it exists, below the form fields */}
+        {error && (
+          <p className="text-red-500 text-sm text-center mt-4">{error}</p>
+        )}
         {/* Register Redirect */}
         <p className="text-sm text-gray-600 text-center mt-4">
           Don't have an account?{" "}
