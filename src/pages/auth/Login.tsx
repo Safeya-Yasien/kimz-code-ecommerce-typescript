@@ -1,48 +1,23 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginFormValues, loginSchema } from "@/validations/loginSchema";
-import { Link, Navigate, useNavigate, useSearchParams } from "react-router";
+import { Link, Navigate } from "react-router";
+import { Loader2 } from "lucide-react";
+
 import { Heading } from "@/components/common";
 import { FormInput } from "@/components/Form";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { actAuthLogin, resetUI } from "@/store/auth/authSlice";
-import { Loader2 } from "lucide-react";
-import { useEffect } from "react";
+
+import useLogin from "@/hooks/useLogin";
 
 const Login = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const loginRequiredMessage = searchParams.get("message") === "login_required";
-  const accountCreatedMessage =
-    searchParams.get("message") === "account_created";
-
-  const { error, loading, accessToken } = useAppSelector((state) => state.auth);
-
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
   const {
+    error,
+    loading,
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    mode: "onBlur",
-  });
-
-  const onSubmit = (data: LoginFormValues) => {
-    if (accountCreatedMessage) {
-      setSearchParams("");
-    }
-    dispatch(actAuthLogin(data))
-      .unwrap()
-      .then(() => navigate("/"));
-  };
-
-  useEffect(() => {
-    return () => {
-      dispatch(resetUI());
-    };
-  }, [dispatch]);
+    onSubmit,
+    loginRequiredMessage,
+    accountCreatedMessage,
+    accessToken,
+    formErrors,
+  } = useLogin();
 
   if (accessToken) {
     return <Navigate to={"/"} />;
@@ -100,7 +75,7 @@ const Login = () => {
             name="email"
             label="Email"
             type="email"
-            error={errors.email?.message}
+            error={formErrors.email?.message}
             register={register}
           />
 
@@ -109,7 +84,7 @@ const Login = () => {
             name="password"
             label="Password"
             type="password"
-            error={errors.password?.message}
+            error={formErrors.password?.message}
             register={register}
           />
 
