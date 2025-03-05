@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { Menu, X } from "lucide-react";
 import MobileMenu from "./MobileMenu";
@@ -6,6 +6,7 @@ import HeaderBasket from "./HeaderBasket";
 import HeaderWishlist from "./HeaderWishlist";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { authLogout } from "@/store/auth/authSlice";
+import { actGetWishlist } from "@/store/wishlist/wishlistSlice";
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +19,12 @@ const Header = () => {
     dispatch(authLogout());
     navigate("/login");
   };
+
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(actGetWishlist("productsIds"));
+    }
+  }, [dispatch, accessToken]);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-gray-900 shadow-lg">

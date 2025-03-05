@@ -17,12 +17,6 @@ import cart from "./cart/cartSlice";
 import wishlist from "./wishlist/wishlistSlice";
 import auth from "./auth/authSlice";
 
-const cartPersistConfig = {
-  key: "cart",
-  storage,
-  whitelist: ["items"],
-};
-
 const rootPersistConfig = {
   key: "root",
   storage,
@@ -35,13 +29,19 @@ const authPersistConfig = {
   whitelist: ["user", "accessToken"],
 };
 
+const cartPersistConfig = {
+  key: "cart",
+  storage,
+  whitelist: ["items"],
+};
+
 const rootReducer = combineReducers({
+  auth: persistReducer(authPersistConfig, auth),
   categories,
   products,
   // enable persistence (saving to localStorage)
   cart: persistReducer(cartPersistConfig, cart),
   wishlist: wishlist,
-  auth: persistReducer(authPersistConfig, auth),
 });
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
