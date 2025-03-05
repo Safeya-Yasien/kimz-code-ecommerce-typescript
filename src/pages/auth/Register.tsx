@@ -55,7 +55,7 @@ const Register = () => {
     const { firstName, lastName, email, password } = data;
     dispatch(actAuthRegister({ firstName, lastName, email, password }))
       .unwrap()
-      .then(() => navigate("/login"));
+      .then(() => navigate("/login?message=account_created"));
   };
 
   return (

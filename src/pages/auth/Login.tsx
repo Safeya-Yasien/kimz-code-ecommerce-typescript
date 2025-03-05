@@ -1,11 +1,14 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormValues, loginSchema } from "@/validations/loginSchema";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { Heading } from "@/components/common";
 import { FormInput } from "@/components/Form";
 
 const Login = () => {
+  const [searchParams] = useSearchParams();
+  const message = searchParams.get("message");
+
   const {
     register,
     handleSubmit,
@@ -23,6 +26,11 @@ const Login = () => {
     <div className="container mx-auto px-4 py-8">
       <Heading title="Login to Your Account" />
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md mx-auto">
+        {message === "account_created" && (
+          <p className="text-green-500 text-sm text-center mb-4">
+            Account created successfully! Please log in.
+          </p>
+        )}{" "}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Email */}
           <FormInput
@@ -50,7 +58,6 @@ const Login = () => {
             Login
           </button>
         </form>
-
         {/* Register Redirect */}
         <p className="text-sm text-gray-600 text-center mt-4">
           Don't have an account?{" "}
