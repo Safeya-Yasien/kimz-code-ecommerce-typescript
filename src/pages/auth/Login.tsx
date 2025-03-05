@@ -1,13 +1,18 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormValues, loginSchema } from "@/validations/loginSchema";
-import { Link, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { Heading } from "@/components/common";
 import { FormInput } from "@/components/Form";
+import { useAppDispatch } from "@/store/hooks";
+import actAuthLogin from "@/store/auth/act/actAuthLogin";
 
 const Login = () => {
   const [searchParams] = useSearchParams();
   const message = searchParams.get("message");
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -19,7 +24,9 @@ const Login = () => {
   });
 
   const onSubmit = (data: LoginFormValues) => {
-    console.log("User Logged In:", data);
+    dispatch(actAuthLogin(data))
+      .unwrap()
+      .then(() => navigate("/"));
   };
 
   return (
