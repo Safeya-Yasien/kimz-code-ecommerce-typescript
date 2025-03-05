@@ -6,7 +6,7 @@ import {
   RegisterFormValues,
   registerSchema,
 } from "@/validations/registerSchema";
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import { FormInput } from "@/components/Form";
 import useCheckEmailAvailability from "@/hooks/useCheckEmailAvailability";
 import { FocusEvent, useEffect } from "react";
@@ -17,7 +17,7 @@ import { Loader2 } from "lucide-react";
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector((state) => state.auth);
+  const { loading, error, accessToken } = useAppSelector((state) => state.auth);
 
   const {
     register,
@@ -63,6 +63,10 @@ const Register = () => {
       dispatch(resetUI());
     };
   }, [dispatch]);
+
+  if (accessToken) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">

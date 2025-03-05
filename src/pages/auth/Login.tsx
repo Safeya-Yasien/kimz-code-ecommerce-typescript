@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormValues, loginSchema } from "@/validations/loginSchema";
-import { Link, useNavigate, useSearchParams } from "react-router";
+import { Link, Navigate, useNavigate, useSearchParams } from "react-router";
 import { Heading } from "@/components/common";
 import { FormInput } from "@/components/Form";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -11,9 +11,11 @@ import { useEffect } from "react";
 
 const Login = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const message = searchParams.get("message");
+  const loginRequiredMessage = searchParams.get("message") === "login_required";
+  const accountCreatedMessage =
+    searchParams.get("message") === "account_created";
 
-  const { error, loading } = useAppSelector((state) => state.auth);
+  const { error, loading, accessToken } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ const Login = () => {
   });
 
   const onSubmit = (data: LoginFormValues) => {
-    if (message) {
+    if (accountCreatedMessage) {
       setSearchParams("");
     }
     dispatch(actAuthLogin(data))
@@ -42,15 +44,56 @@ const Login = () => {
     };
   }, [dispatch]);
 
+  if (accessToken) {
+    return <Navigate to={"/"} />;
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Heading title="Login to Your Account" />
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md mx-auto">
-        {message === "account_created" && (
-          <p className="text-green-500 text-sm text-center mb-4">
-            Account created successfully! Please log in.
-          </p>
-        )}{" "}
+        {loginRequiredMessage && (
+          <div className="flex items-center bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 rounded-md mb-4">
+            <svg
+              className="w-5 h-5 mr-2 text-yellow-600"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"
+              ></path>
+            </svg>
+            <p className="text-sm">You need to log in to view this content.</p>
+          </div>
+        )}
+
+        {accountCreatedMessage && (
+          <div className="flex items-center bg-green-100 border-l-4 border-green-500 text-green-700 p-3 rounded-md mb-4">
+            <svg
+              className="w-5 h-5 mr-2 text-green-600"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+            <p className="text-sm">
+              Account created successfully! Please log in.
+            </p>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Email */}
           <FormInput
