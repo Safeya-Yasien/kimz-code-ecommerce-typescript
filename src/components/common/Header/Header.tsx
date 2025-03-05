@@ -1,12 +1,23 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { Menu, X } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 import HeaderBasket from "./HeaderBasket";
 import HeaderWishlist from "./HeaderWishlist";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { authLogout } from "@/store/auth/authSlice";
 
 const Header = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { accessToken, user } = useAppSelector((state) => state.auth);
+
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleLogout = () => {
+    dispatch(authLogout());
+    navigate("/login");
+  };
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-gray-900 shadow-lg">
@@ -50,18 +61,37 @@ const Header = () => {
         </nav>
 
         <div className="hidden md:flex items-center space-x-4">
-          <NavLink
-            to="/login"
-            className="text-white hover:text-blue-400 transition"
-          >
-            Login
-          </NavLink>
-          <NavLink
-            to="/register"
-            className="text-white hover:text-blue-400 transition"
-          >
-            Register
-          </NavLink>
+          {accessToken ? (
+            <div className="flex items-center space-x-4">
+              <Link
+                to="/profile"
+                className="text-white font-medium hover:text-blue-400 transition"
+              >
+                {user?.firstName} {user?.lastName}
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-white hover:text-red-500 transition"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <>
+              <NavLink
+                to="/login"
+                className="text-white hover:text-blue-400 transition"
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to="/register"
+                className="text-white hover:text-blue-400 transition"
+              >
+                Register
+              </NavLink>
+            </>
+          )}
           <HeaderBasket />
           <HeaderWishlist />
         </div>
