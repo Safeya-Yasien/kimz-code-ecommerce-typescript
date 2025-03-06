@@ -5,6 +5,7 @@ import {
   cleanCartProductsFullInfo,
 } from "@/store/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { resetOrderStatus } from "@/store/orders/ordersSlice";
 import { useCallback, useEffect } from "react";
 
 const useCart = () => {
@@ -12,6 +13,9 @@ const useCart = () => {
   const { items, productsFullInfo, loading, error } = useAppSelector(
     (state) => state.cart
   );
+  const userAccessToken = useAppSelector((state) => state.auth.accessToken);
+
+  const placeOrderStatus = useAppSelector((state) => state.orders.loading);
 
   useEffect(() => {
     const promise = dispatch(actGetProductsByItems());
@@ -19,6 +23,7 @@ const useCart = () => {
     return () => {
       promise.abort();
       dispatch(cleanCartProductsFullInfo());
+      dispatch(resetOrderStatus());
     };
   }, [dispatch]);
 
@@ -41,6 +46,14 @@ const useCart = () => {
     [dispatch]
   );
 
-  return { products, changeQuantityHandler, removeItemHandler, loading, error };
+  return {
+    products,
+    changeQuantityHandler,
+    removeItemHandler,
+    loading,
+    error,
+    userAccessToken,
+    placeOrderStatus,
+  };
 };
 export default useCart;

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TProduct, TLoading, isString } from "@/types";
 import actGetProductsByItems from "./act/actGetProductsByItems";
+import { TProduct, TLoading, isString } from "@/types";
 
 interface ICartState {
   items: { [key: string]: number };
@@ -31,15 +31,17 @@ const cartSlice = createSlice({
     cartItemChangeQuantity: (state, action) => {
       state.items[action.payload.id] = action.payload.quantity;
     },
-
     cartItemRemove: (state, action) => {
       delete state.items[action.payload];
       state.productsFullInfo = state.productsFullInfo.filter(
         (el) => el.id !== action.payload
       );
     },
-
     cleanCartProductsFullInfo: (state) => {
+      state.productsFullInfo = [];
+    },
+    clearCartAfterPlaceOrder: (state) => {
+      state.items = {};
       state.productsFullInfo = [];
     },
   },
@@ -68,6 +70,7 @@ export const {
   cartItemChangeQuantity,
   cartItemRemove,
   cleanCartProductsFullInfo,
+  clearCartAfterPlaceOrder,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

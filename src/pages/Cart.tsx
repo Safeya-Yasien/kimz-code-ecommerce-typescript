@@ -4,15 +4,21 @@ import { Loading, LottieHandler } from "@/components/feedback";
 import useCart from "@/hooks/useCart";
 
 const Cart = () => {
-  const { products, removeItemHandler, changeQuantityHandler, loading, error } =
-    useCart();
+  const {
+    products,
+    removeItemHandler,
+    changeQuantityHandler,
+    loading,
+    error,
+    userAccessToken,
+    placeOrderStatus,
+  } = useCart();
 
   return (
     <div className="container mx-auto px-4 py-8">
       <Heading title="Your Cart" />
 
       <Loading error={error} status={loading} type="cart">
-        {/* Cart Items List */}
         {products.length ? (
           <div className="mt-10 space-y-6 max-w-3xl mx-auto">
             <CartItemList
@@ -21,8 +27,17 @@ const Cart = () => {
               removeItemHandler={removeItemHandler}
             />
 
-            <CartSubtotalPrice products={products} />
+            {/* Pass products to calculate subtotal & handle order confirmation */}
+            <CartSubtotalPrice
+              products={products}
+              userAccessToken={userAccessToken}
+            />
           </div>
+        ) : placeOrderStatus === "succeeded" ? (
+          <LottieHandler
+            type="success"
+            message="Your cart is empty. Start shopping now!"
+          />
         ) : (
           <LottieHandler
             type="empty"
@@ -33,4 +48,5 @@ const Cart = () => {
     </div>
   );
 };
+
 export default Cart;
