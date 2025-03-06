@@ -3,6 +3,9 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 
 // layouts
 const MainLayout = lazy(() => import("@/layouts/MainLayout/MainLayout"));
+const ProfileLayout = lazy(
+  () => import("@layouts/ProfileLayout/ProfileLayout")
+);
 
 // pages
 const Home = lazy(() => import("@/pages/Home"));
@@ -15,7 +18,6 @@ const Register = lazy(() => import("@/pages/auth/Register"));
 
 // protect routes
 const Wishlist = lazy(() => import("@/pages/Wishlist"));
-import Profile from "@/pages/Profile";
 
 // error
 import Error from "@/pages/Error";
@@ -26,6 +28,8 @@ import {
   PageSuspenseFallback,
   ProtectedRoute,
 } from "@/components/feedback";
+import Orders from "@/pages/Orders";
+import Account from "@/pages/Account";
 
 const router = createBrowserRouter([
   {
@@ -121,15 +125,34 @@ const router = createBrowserRouter([
           </PageSuspenseFallback>
         ),
       },
+
       {
         path: "profile",
         element: (
           <ProtectedRoute>
             <PageSuspenseFallback>
-              <Profile />
+              <ProfileLayout />
             </PageSuspenseFallback>
           </ProtectedRoute>
         ),
+        children: [
+          {
+            index: true,
+            element: (
+              <PageSuspenseFallback>
+                <Account />
+              </PageSuspenseFallback>
+            ),
+          },
+          {
+            path: "orders",
+            element: (
+              <PageSuspenseFallback>
+                <Orders />
+              </PageSuspenseFallback>
+            ),
+          },
+        ],
       },
     ],
   },
