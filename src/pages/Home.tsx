@@ -1,11 +1,17 @@
-import { Heading } from "@/components/common";
 import { useNavigate } from "react-router";
+
+import { GridList, Heading } from "@/components/common";
+import useCategories from "@/hooks/useCategories";
+import { Loading } from "@/components/feedback";
+import { Category } from "@/components/eCommerece";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { records, loading, error } = useCategories();
+  const featuredCategories = records.slice(0, 4);
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
       <section className="text-center py-16 bg-gray-100 rounded-lg shadow-md">
         <h1 className="text-4xl font-bold text-gray-800">
@@ -25,19 +31,16 @@ const Home = () => {
       {/* Featured Products */}
       <section className="mt-12">
         <Heading title="Featured Products" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
-          {/* Sample Product Cards */}
-          {[...Array(3)].map((_, index) => (
-            <div key={index} className="bg-white shadow-lg rounded-lg p-4">
-              <div className="w-full h-40 bg-gray-200 rounded-md"></div>
-              <h3 className="text-lg font-semibold mt-4">Product Name</h3>
-              <p className="text-gray-600">Price: $XX.XX</p>
-              <button className="mt-4 bg-green-500 text-white w-full">
-                View Product
-              </button>
-            </div>
-          ))}
-        </div>
+        <Loading status={loading} error={error} type="category">
+          {/* Categories Grid */}
+          <GridList
+            records={featuredCategories}
+            message="there are no categories"
+            renderItem={(category) => (
+              <Category key={category.id} {...category} />
+            )}
+          />
+        </Loading>
       </section>
 
       {/* Call-to-Action */}
